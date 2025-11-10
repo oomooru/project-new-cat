@@ -1,0 +1,26 @@
+/* src/styles/components.css */
+
+/* Tailwind에게 이 블록이 'components' 레이어임을 명시적으로 알립니다. */
+@layer components {
+  /* 모든 사이드바 링크의 기본 스타일을 정의합니다. */
+  .sidebar-link {
+    /* 기본 레이아웃 및 전환 효과 */
+    @apply flex items-center p-3 rounded-lg transition-colors duration-150;
+  }
+
+  /* 활성 상태가 아닌(inactive) 링크의 스타일을 정의합니다. */
+  .sidebar-link-inactive {
+    /* 라이트 모드 기본/호버 색상 */
+    @apply text-neutral-600 hover:bg-neutral-200;
+    /* 다크 모드 기본/호버 색상 */
+    @apply dark:text-neutral-300 dark:hover:bg-neutral-700;
+  }
+
+  /* 활성 상태(active) 링크의 스타일을 정의합니다. */
+  .sidebar-link-active {
+    /* 라이트 모드 활성 색상 */
+    @apply text-neutral-600 font-bold bg-neutral-200;
+    /* 다크 모드 활성 색상 */
+    @apply dark:text-neutral-400 dark:bg-neutral-700;
+  }
+}
