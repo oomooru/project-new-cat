@@ -4,35 +4,49 @@ import React from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import MainContent from "./MainContent";
+import { useLocation, useParams } from "react-router-dom";
+import { CARD_GAME_CATEGORIES } from "../data/tempData";
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
+  headerName?: string;
+  hideHeader?: boolean;
 }
 
 /**
  * @component
  * @description Header, Sidebar, Main Content를 포함하는 기본 페이지 레이아웃 컴포넌트.
  */
-const DefaultLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
+const DefaultLayout: React.FC<DefaultLayoutProps> = ({
+  children,
+  headerName,
+  hideHeader = false,
+}) => {
+  const location = useLocation();
+  const { id } = useParams<{ id: string }>();
+  let currentPageTitle = headerName;
+
+  if (location.pathname.startsWith("/category/") && id) {
+    const category = CARD_GAME_CATEGORIES.find((cat) => cat.id === id);
+    if (category) {
+      currentPageTitle = category.name;
+    } else {
+      currentPageTitle = "알 수 없는 카테고리";
+    }
+  }
+
   return (
-    // 전체 뷰포트를 채우며, 배경색은 가장 바깥쪽에만 적용합니다.
-    // 1. h-screen: Full Height, bg-neutral-100: 전체 배경색
     <div
       className="flex h-screen bg-neutral-100 text-neutral-800 
                     dark:bg-neutral-900 dark:text-neutral-200 
                     transition-colors duration-300 select-none"
     >
-      {/* 1. 사이드바 (좌측에 딱 붙음) */}
       <Sidebar />
 
-      {/* 2. 메인 영역 (사이드바 옆의 나머지 공간) */}
       <div className="flex flex-col flex-1 overflow-hidden">
-        {/* 2-1. 상단 헤더 (상단에 딱 붙음) */}
-        <Header />
+        {!hideHeader && <Header pageTitle={currentPageTitle} />}
 
-        {/* 2-2. 컨텐츠 영역을 감싸는 Wrapper */}
-        <div className="flex-1 overflow-y-auto">
-          {/* MainContent 영역에 둥근 모서리와 외곽선을 적용합니다. */}
+        <div className="flex-1 p-8 overflow-y-auto border-1 border-neutral-300 rounded-tl-xl dark:border-neutral-700">
           <MainContent>{children}</MainContent>
         </div>
       </div>

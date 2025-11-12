@@ -5,7 +5,7 @@
   /* 모든 사이드바 링크의 기본 스타일을 정의합니다. */
   .sidebar-link {
     /* 기본 레이아웃 및 전환 효과 */
-    @apply flex items-center p-3 rounded-lg transition-colors duration-150;
+    @apply flex items-center px-3 py-2 rounded-lg transition-colors duration-150;
   }
 
   /* 활성 상태가 아닌(inactive) 링크의 스타일을 정의합니다. */

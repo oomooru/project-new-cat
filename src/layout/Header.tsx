@@ -3,22 +3,24 @@
 import React from "react";
 import { useTheme } from "../context/useTheme";
 
+interface HeaderProps {
+  pageTitle?: string;
+}
+
 /**
  * @component
  * @description 페이지의 얇은 상단 헤더 영역.
  */
-const Header: React.FC = () => {
-  const { theme, toggleTheme } = useTheme(); // 👈 Context 사용
+const Header: React.FC<HeaderProps> = ({ pageTitle = "Dashboard" }) => {
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    // 배경색: light일 때 neutral-100, dark일 때 neutral-800
     <header
-      className="flex items-center justify-between h-16 px-8 bg-neutral-100 sticky top-0 z-10 
-                       dark:bg-neutral-900 dark:text-neutral-200 transition-colors duration-300"
+      className="flex items-center justify-between h-16 px-8 bg-neutral-100 sticky top-0 z-10
+                       dark:bg-neutral-800 dark:text-neutral-200 transition-colors duration-300"
     >
-      {/* 로고 또는 제목 */}
-      <h1 className="text-xl font-semibold text-primary-600 dark:text-primary-400">
-        App Dashboard
+      <h1 className="text-xl font-semibold text-neutral-700 dark:text-neutral-200">
+        {pageTitle || "카드냥"}
       </h1>
 
       <div className="flex items-center space-x-4">
